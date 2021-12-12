@@ -9,22 +9,27 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 public class OrderLine {
-    @GeneratedValue
     @Id
+    @GeneratedValue
     private long id;
     @NonNull
     private int quantity;
     @NonNull
-    private String billingAddress; //TODO not sure what is BillingAddress
+    @Embedded
+    private Address billingAddress;//TODO not sure what is BillingAddress
     @NonNull
     private LocalDateTime purchasedTime;
     @NonNull
+
     private LocalDateTime deliveredTime;
     @NonNull
     private ShippingStatus shippingStatus;
