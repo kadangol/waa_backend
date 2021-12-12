@@ -28,17 +28,23 @@ public class Buyer {
 
     @NonNull
     private int points;
+
     @ManyToMany
+    @JoinTable(
+            name = "BuyersFollowedSellers",
+            joinColumns = @JoinColumn(name="buyer_id", referencedColumnName = "Id"),
+            inverseJoinColumns = @JoinColumn(name="seller_id", referencedColumnName = "Id"))
     private List<Seller> followedSellers;
 
     @OneToMany
+    @JoinColumn(name="buyer_review")
     private List<Review> reviews;
 
     @Embedded
     @NonNull
     private Address shippingAddress;
 
-    @OneToMany
+    @OneToMany(mappedBy = "buyer")
     private List<OrderLine> orderLines;
 
 }

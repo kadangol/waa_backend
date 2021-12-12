@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
+
 public interface IBuyerService {
     ResponseMessage save(BuyerSaveDTO productSaveDTO);
 
