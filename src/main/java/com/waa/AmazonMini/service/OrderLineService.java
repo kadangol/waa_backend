@@ -27,8 +27,13 @@ public class OrderLineService implements IOrderLineService {
     private OrderLine orderLine;
 
     @Override
+    public List<OrderLine> findAll() {
+        return orderLineRepository.findAll();
+    }
+
+    @Override
     public ResponseMessage addProduct(Long id, int quantity) {
-        if(id == product.getId() && quantity <= product.getQuantity()){
+        if (id == product.getId() && quantity <= product.getQuantity()) {
             orderLine.setQuantity(quantity);
         }
         return new ResponseMessage(quantity + "item added");
@@ -36,23 +41,19 @@ public class OrderLineService implements IOrderLineService {
 
     @Override
     public ResponseMessage removeProduct(Long id) {
-        if(id == product.getId() && orderLine.getQuantity() > 0){
+        if (id == product.getId() && orderLine.getQuantity() > 0) {
             orderLine.setQuantity(orderLine.getQuantity() - 1);
         }
-        return new ResponseMessage(quantity + "item removed");
+        return new ResponseMessage("item removed");
     }
 
     @Override
     public ResponseMessage cancelOrder(Long id) {
-        if(id == product.getId() && orderLine.getQuantity()>0){
+        if (id == product.getId() && orderLine.getQuantity() > 0) {
             orderLineRepository.deleteById(id);
             orderLine.setQuantity(0);
         }
         return new ResponseMessage("Item removed", HttpStatus.OK, LocalUtil.getMessage("ProductID", product.getId()));
     }
 
-    @Override
-    public ResponseMessage orderStatus() {
-        return null;
-    }
 }
