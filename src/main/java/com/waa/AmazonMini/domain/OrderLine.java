@@ -6,29 +6,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 public class OrderLine {
-    @GeneratedValue
     @Id
+    @GeneratedValue
     private long id;
     @NonNull
     private int quantity;
     @NonNull
-    private String billingAddress; //TODO not sure what is BillingAddress
+    @Embedded
+    private Address billingAddress;//TODO not sure what is BillingAddress
     @NonNull
     private LocalDateTime purchasedTime;
     @NonNull
-    private LocalDateTime deliveredTime;
-    @NonNull
-    private ShippingStatus shippingStatus;
-    @NonNull
-    private ShippingStatus orderStatus;
-}
+        private ShippingStatus shippingStatus;
+        @NonNull
+        private ShippingStatus orderStatus;
+        @ManyToMany
+        private List<Product> products;
+    }
+

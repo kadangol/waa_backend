@@ -24,7 +24,7 @@ public class Product {
     private String description;
     @NonNull
     private double pricePerUnit;
-
+    private int quantity;
     @NonNull
     @ManyToOne //TODO need to fic mappedby ...
     private Seller seller;
