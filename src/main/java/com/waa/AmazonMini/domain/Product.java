@@ -24,12 +24,20 @@ public class Product {
     private String description;
     @NonNull
     private double pricePerUnit;
-
-//    @NonNull
-//    @ManyToOne //TODO need to fic mappedby ...
-//    private Seller seller;
+    private int quantity;
+    @NonNull
+    @ManyToOne //TODO need to fic mappedby ...
+    private Seller seller;
 
     @NonNull
     @OneToMany
     private List<Photo> photoes;
+
+    public Product(@NonNull String name, @NonNull String description, @NonNull double pricePerUnit, @NonNull Seller seller, @NonNull List<Photo> photoes) {
+        this.name = name;
+        this.description = description;
+        this.pricePerUnit = pricePerUnit;
+        this.seller = seller;
+        this.photoes = photoes;
+    }
 }
