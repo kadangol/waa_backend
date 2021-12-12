@@ -25,9 +25,9 @@ public class Product {
     @NonNull
     private double pricePerUnit;
 
-    @NonNull
-    @ManyToOne //TODO need to fic mappedby ...
-    private Seller seller;
+//    @NonNull
+//    @ManyToOne //TODO need to fic mappedby ...
+//    private Seller seller;
 
     @NonNull
     @OneToMany

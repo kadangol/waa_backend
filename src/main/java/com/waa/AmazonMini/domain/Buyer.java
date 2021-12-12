@@ -15,30 +15,22 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Buyer {
+public class Buyer extends Users{
+
     @GeneratedValue
     @Id
-    private long id;
-    @NonNull
-    private String nickName;
-    @Email
-    @NonNull
-    private String email;
-
+    private long Id;
 
     @NonNull
     private int points;
-    @ManyToMany
-    private List<Seller> followedSellers;
 
-    @OneToMany
-    private List<Review> reviews;
-
-    @Embedded
-    @NonNull
-    private Address shippingAddress;
-
-    @OneToMany
-    private List<OrderLine> orderLines;
+//    @ManyToMany
+//    private List<Seller> followedSellers;
+//
+//    @OneToMany
+//    private List<Review> reviews;
+//
+//    @OneToMany
+//    private List<OrderLine> orderLines;
 
 }

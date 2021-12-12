@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.apache.tomcat.jni.User;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.Email;
@@ -16,12 +17,12 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Seller {
+public class Seller  extends User {
+
     @GeneratedValue
     @Id
-    private long id;
-    @NonNull
-    private String nickName;
+    private long Id;
+
     @NonNull
     private Status status;
     @Email
