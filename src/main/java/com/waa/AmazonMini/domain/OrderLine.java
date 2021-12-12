@@ -1,5 +1,6 @@
 package com.waa.AmazonMini.domain;
 
+import com.waa.AmazonMini.utils.enums.OrderStatus;
 import com.waa.AmazonMini.utils.enums.ShippingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,10 +29,13 @@ public class OrderLine {
     @NonNull
     private LocalDateTime purchasedTime;
     @NonNull
-        private ShippingStatus shippingStatus;
-        @NonNull
-        private ShippingStatus orderStatus;
-        @ManyToMany
-        private List<Product> products;
-    }
 
+    private LocalDateTime deliveredTime;
+    @NonNull
+    private ShippingStatus shippingStatus;
+    @NonNull
+    private OrderStatus orderStatus;
+    @ManyToOne
+    @JoinColumn(name="buyer")
+    private Buyer buyer;
+}

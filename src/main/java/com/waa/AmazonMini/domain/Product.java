@@ -32,4 +32,12 @@ public class Product {
     @NonNull
     @OneToMany
     private List<Photo> photoes;
+
+    public Product(@NonNull String name, @NonNull String description, @NonNull double pricePerUnit, @NonNull Seller seller, @NonNull List<Photo> photoes) {
+        this.name = name;
+        this.description = description;
+        this.pricePerUnit = pricePerUnit;
+        this.seller = seller;
+        this.photoes = photoes;
+    }
 }
