@@ -17,42 +17,42 @@ import java.util.List;
 @CrossOrigin
 //@PreAuthorize("hasRole('BUYER')") //TODO Uncomment once Auth service has been added
 public class BuyerController {
-//    private final IBuyerService buyerService;
-//
-//    public BuyerController(IBuyerService buyerService) {
-//        this.buyerService = buyerService;
-//    }
-//
-//    @GetMapping("/{buyerId}")
-//    public Buyer findById(@PathVariable("buyerId") Long buyerId){
-//        return buyerService.findById(buyerId);
-//    }
-//
-//    @GetMapping
-//    public List<Buyer> findAll(){
-//        return buyerService.findAll();
-//    }
-//
-//    @GetMapping(params = " paged = true ")
-//    public Page<Buyer> findAllPageable(Pageable pageable){
-//        return buyerService.findAll(pageable);
-//    }
-//
-//    @PostMapping
-//    //@PreAuthorize("hasRole('SELLER')") //TODO uncomment once Auth service has been added
-//    public ResponseMessage add(@RequestBody BuyerSaveDTO dto){
-//        return buyerService.save(dto);
-//    }
-//
-//    @PutMapping
-//    //@PreAuthorize("hasRole('SELLER')")
-//    public ResponseMessage update(@RequestBody BuyerUpdateDTO dto) {
-//        return buyerService.update(dto);
-//    }
-//
-//    @DeleteMapping("/{productId}")
-//    //@PreAuthorize("hasRole('SELLER')")
-//    public ResponseMessage delete(@PathVariable("productId") Long productId) {
-//        return buyerService.delete(productId);
-//    }
+    private final IBuyerService buyerService;
+
+    public BuyerController(IBuyerService buyerService) {
+        this.buyerService = buyerService;
+    }
+
+    @GetMapping("/{buyerId}")
+    public Buyer findById(@PathVariable("buyerId") Long buyerId){
+        return buyerService.findById(buyerId);
+    }
+
+    @GetMapping
+    public List<Buyer> findAll(){
+        return buyerService.findAll();
+    }
+
+    @GetMapping(params = " paged = true ")
+    public Page<Buyer> findAllPageable(Pageable pageable){
+        return buyerService.findAll(pageable);
+    }
+
+    @PostMapping
+    //@PreAuthorize("hasRole('SELLER')") //TODO uncomment once Auth service has been added
+    public ResponseMessage add(@RequestBody BuyerSaveDTO dto){
+        return buyerService.save(dto);
+    }
+
+    @PutMapping
+    //@PreAuthorize("hasRole('SELLER')")
+    public ResponseMessage update(@RequestBody BuyerUpdateDTO dto) {
+        return buyerService.update(dto);
+    }
+
+    @DeleteMapping("/{productId}")
+    //@PreAuthorize("hasRole('SELLER')")
+    public ResponseMessage delete(@PathVariable("productId") Long productId) {
+        return buyerService.delete(productId);
+    }
 }
