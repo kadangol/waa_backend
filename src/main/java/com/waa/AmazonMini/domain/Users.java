@@ -33,6 +33,18 @@ public class Users {
     @Email
     private String EmailAddress ;
 
+    private String PhoneNo ;
+
+    @NotNull
+    @NotEmpty
+    private boolean IsDeleted;
+
+    @OneToOne(mappedBy = "user")
+    private Seller seller;
+
+    @OneToOne(mappedBy = "user")
+    private Buyer buyer;
+
 
 }
 

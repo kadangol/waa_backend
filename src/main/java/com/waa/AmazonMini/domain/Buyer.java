@@ -41,8 +41,9 @@ public class Buyer {
     private List<OrderLine> orderLines;
 
 
-    @OneToOne(mappedBy = "user")
-    private Seller seller;
+    @OneToOne
+    @JoinColumn(name = "UserId", nullable = false)
+    private Users user;
 
 
 }
