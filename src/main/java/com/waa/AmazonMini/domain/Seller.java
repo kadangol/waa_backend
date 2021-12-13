@@ -14,17 +14,14 @@ import javax.validation.constraints.Email;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Seller {
+public class Seller extends  Users {
 
     @GeneratedValue
     @Id
     private long Id;
 
     @NonNull
-    private Status status;
-    @Email
-    @NonNull
-    private String email;
+    private Status ApprovalStatus;
 
     @OneToOne
     @JoinColumn(name = "UserId", nullable = false)
