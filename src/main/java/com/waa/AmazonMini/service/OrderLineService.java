@@ -39,7 +39,7 @@ public class OrderLineService implements IOrderLineService {
         if(id == product.getId() && orderLine.getQuantity() > 0){
             orderLine.setQuantity(orderLine.getQuantity() - 1);
         }
-        return new ResponseMessage(quantity + "item removed");
+        return new ResponseMessage("item removed");
     }
 
     @Override
