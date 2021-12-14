@@ -8,6 +8,7 @@ import com.waa.AmazonMini.auth.repository.RoleRepository;
 import com.waa.AmazonMini.auth.repository.UserRepository;
 import com.waa.AmazonMini.auth.security.jwt.JwtUtils;
 import com.waa.AmazonMini.auth.security.services.UserDetailsImpl;
+import com.waa.AmazonMini.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -86,10 +87,15 @@ public class AuthController {
 
 		// Create new user's account
 		User user = new User(signUpRequest.getUsername(),
+							encoder.encode(signUpRequest.getPassword()),
+								signUpRequest.getFullName(),
 							 signUpRequest.getEmail(),
-							 encoder.encode(signUpRequest.getPassword()));
+							 signUpRequest.getPhone(),
+							 signUpRequest.getSeller(),
+							 signUpRequest.getBuyer(),
+							 signUpRequest.getRoles());
 
-		Set<String> strRoles = signUpRequest.getRole();
+		Set<Role> strRoles = signUpRequest.getRoles();
 		Set<Role> roles = new HashSet<>();
 
 		if (strRoles == null) {
@@ -98,14 +104,14 @@ public class AuthController {
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
+				switch (role.getName()) {
+					case ROLE_ADMIN:
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(adminRole);
 
 					break;
-				case "seller":
+					case ROLE_SELLER:
 					Role sellerRole = roleRepository.findByName(ERole.ROLE_SELLER)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(sellerRole);

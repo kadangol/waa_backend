@@ -1,8 +1,7 @@
 package com.waa.AmazonMini.service;
 
-import com.waa.AmazonMini.domain.Product;
 import com.waa.AmazonMini.domain.Seller;
-import com.waa.AmazonMini.domain.Users;
+import com.waa.AmazonMini.domain.User;
 import com.waa.AmazonMini.dto.SellerSaveDTO;
 import com.waa.AmazonMini.repository.SellerRepository;
 import com.waa.AmazonMini.service.interfaces.ISellerService;
@@ -14,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -30,13 +27,13 @@ public class SellerService implements ISellerService {
     @Override
     public Seller registerSeller(SellerSaveDTO dto) {
 
-        Users u = new Users();
-        u.setEmailAddress(dto.getEmailAddress());
+        User u = new User();
+        u.setEmail(dto.getEmailAddress());
         u.setFullName(dto.getFullName());
-        u.setUserName(dto.getUserName());
-        u.setIsDeleted(false);
+        u.setUsername(dto.getUserName());
+        u.setIsDeleted(0);
         u.setPassword(dto.getPassword());
-        u.setPhoneNo(dto.getPhoneNo());
+        u.setPhone(dto.getPhoneNo());
 
         userService.registerUser(u);
 

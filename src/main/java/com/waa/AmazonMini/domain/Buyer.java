@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @Entity
@@ -43,7 +42,7 @@ public class Buyer {
 
     @OneToOne
     @JoinColumn(name = "UserId", nullable = false)
-    private Users user;
+    private User user;
 
 
 }

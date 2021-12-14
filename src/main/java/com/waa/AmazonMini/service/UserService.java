@@ -1,6 +1,6 @@
 package com.waa.AmazonMini.service;
 
-import com.waa.AmazonMini.domain.Users;
+import com.waa.AmazonMini.domain.User;
 import com.waa.AmazonMini.repository.UsersRepository;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +15,19 @@ public class UserService {
     private  UsersRepository usersRepository;
 
 
-    public Users registerUser(Users user){
+    public User registerUser(User user){
         var result = usersRepository.save(user);
         return result;
     }
 
-    public Users updateUser(Users user){
+    public User updateUser(User user){
         return  usersRepository.save(user);
     }
 
-    public  Users deleteUser(long Id)
+    public User deleteUser(long Id)
     {
         var u = usersRepository.getById(Id);
-        u.setIsDeleted(true);
+        u.setIsDeleted(1);
         return  usersRepository.save(u);
     }
 

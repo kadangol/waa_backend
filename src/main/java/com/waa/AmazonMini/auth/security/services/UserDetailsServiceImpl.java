@@ -1,7 +1,7 @@
 package com.waa.AmazonMini.auth.security.services;
 
-import com.waa.AmazonMini.auth.model.User;
 import com.waa.AmazonMini.auth.repository.UserRepository;
+import com.waa.AmazonMini.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,7 +1,7 @@
 package com.waa.AmazonMini.auth.security.services;
 
-import com.waa.AmazonMini.auth.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.waa.AmazonMini.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

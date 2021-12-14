@@ -36,6 +36,6 @@ public class OrderLine {
     @NonNull
     private OrderStatus orderStatus;
     @ManyToOne
-    @JoinColumn(name="buyer")
+    @JoinColumn(name="buyer_id")
     private Buyer buyer;
 }
