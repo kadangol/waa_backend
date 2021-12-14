@@ -14,7 +14,7 @@ import javax.validation.constraints.Email;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Seller extends  Users {
+public class Seller{
 
     @GeneratedValue
     @Id

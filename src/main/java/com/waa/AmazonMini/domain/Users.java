@@ -36,7 +36,6 @@ public class Users {
     private String PhoneNo ;
 
     @NotNull
-    @NotEmpty
     private boolean IsDeleted;
 
     @OneToOne(mappedBy = "user")
