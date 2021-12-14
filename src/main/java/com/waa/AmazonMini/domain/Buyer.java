@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @Entity
@@ -14,15 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Buyer {
+
     @GeneratedValue
     @Id
-    private long id;
-    @NonNull
-    private String nickName;
-    @Email
-    @NonNull
-    private String email;
-
+    private long Id;
 
     @NonNull
     private int points;
@@ -44,5 +38,11 @@ public class Buyer {
 
     @OneToMany(mappedBy = "buyer")
     private List<OrderLine> orderLines;
+
+
+    @OneToOne
+    @JoinColumn(name = "UserId", nullable = false)
+    private User user;
+
 
 }

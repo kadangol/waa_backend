@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/MiniAmazon
     username: postgres
-    password: postgres
+    password: root
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
@@ -22,5 +22,10 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
 server:
-  port: 8080
+  port: 8082

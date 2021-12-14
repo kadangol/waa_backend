@@ -6,25 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.validation.constraints.Email;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Seller {
+public class Seller{
+
     @GeneratedValue
     @Id
-    private long id;
+    private long Id;
+
     @NonNull
-    private String nickName;
-    @NonNull
-    private Status status;
-    @Email
-    @NonNull
-    private String email;
+    private Status ApprovalStatus;
+
+    @OneToOne
+    @JoinColumn(name = "UserId", nullable = false)
+    private User user;
 }
