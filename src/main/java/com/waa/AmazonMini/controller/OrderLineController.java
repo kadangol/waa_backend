@@ -28,7 +28,6 @@ public class OrderLineController {
         orderLineService.cancelOrder(id);
         return new ResponseMessage("Item removed");
     }
-
 }
 
 
