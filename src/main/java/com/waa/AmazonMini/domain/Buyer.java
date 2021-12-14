@@ -1,5 +1,7 @@
 package com.waa.AmazonMini.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +42,8 @@ public class Buyer {
     private List<OrderLine> orderLines;
 
 
+    @JsonIgnore
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "UserId", nullable = false)
     private User user;

@@ -1,5 +1,7 @@
 package com.waa.AmazonMini.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.waa.AmazonMini.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +24,8 @@ public class Seller{
     private Status ApprovalStatus;
 
     @OneToOne
+    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "UserId", nullable = false)
     private User user;
 }
