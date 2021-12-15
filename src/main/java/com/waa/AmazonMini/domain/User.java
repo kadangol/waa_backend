@@ -1,8 +1,9 @@
 package com.waa.AmazonMini.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.waa.AmazonMini.auth.model.Role;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -29,11 +30,12 @@ public class User {
     private String username;
     @NotNull
     @NotEmpty
+    @JsonIgnore
     private String password;
 
     @NotBlank
     @Size(max = 50)
-//    @Email
+    @Email
     private String email ;
 
     @NotNull
@@ -47,10 +49,12 @@ public class User {
     @Column(columnDefinition="int default 0")
     private int isDeleted;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @OneToOne(mappedBy = "user")
     private Seller seller;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @OneToOne(mappedBy = "user")
     private Buyer buyer;
 
 
@@ -67,14 +71,7 @@ public class User {
         this.fullName = fullName;
         this.phone = phone;
         this.seller = seller;
-        if(seller != null){
-            this.setIsDeleted(0);
-            this.seller.setUser(this);
-        }
         this.buyer = buyer;
-        if(buyer != null){
-            this.buyer.setUser(this);
-        }
         this.roles = roles;
     }
 }

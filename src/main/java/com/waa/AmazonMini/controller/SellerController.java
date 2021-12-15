@@ -24,38 +24,27 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
 
-    @PostMapping("sign-up")
-    public ResponseMessage SignupSeller(@RequestBody SellerSaveDTO dto) {
-        var result = new ResponseMessage("Seller created.", HttpStatus.OK);
-        result.setData(sellerService.registerSeller(dto));
-        return result;
-    }
 
-
-//    @GetMapping
-//    public ResponseMessage getSeller(Pageable pageable) {
-//        var res = new ResponseMessage("Seller List", HttpStatus.OK);
-//        res.setData(sellerService.findAll(pageable));
-//        return res;
-//    }
-
-    @GetMapping(params = " paged = true ")
+    @GetMapping(params = "paged=true")
     public Page<Seller> findAllPageable(org.springframework.data.domain.Pageable pageable){
         return sellerService.findAll(pageable);
     }
 
-    @PutMapping("/approve/{id}")
+    @PutMapping("/{id}/approve")
     public ResponseMessage approveSeller(@PathVariable(value = "id") long Id) {
         var res = new ResponseMessage(sellerService.ApproveSeller(Id), HttpStatus.OK);
         return res;
-
     }
 
-    @PutMapping("/reject/{id}")
+    @PutMapping("/{id}/reject")
     public ResponseMessage rejectSeller(@PathVariable(value = "id") long Id) {
-        var res = new ResponseMessage(sellerService.ApproveSeller(Id), HttpStatus.OK);
+        var res = new ResponseMessage(sellerService.RejectSeller(Id), HttpStatus.OK);
         return res;
+    }
 
+    @GetMapping("/{id}/profile")
+    public ResponseMessage getProfile(@PathVariable(value = "id") long Id) {
+        return new ResponseMessage("Seller Info", HttpStatus.OK, sellerService.getSeller(Id));
     }
 
 }

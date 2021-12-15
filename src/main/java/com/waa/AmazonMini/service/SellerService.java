@@ -44,7 +44,7 @@ public class SellerService implements ISellerService {
 
         return s;
     }
-
+    @Override
     public String ApproveSeller(long Id) {
         var s = sellerRepository.findById(Id);
         if (s.isPresent()) {
@@ -52,7 +52,7 @@ public class SellerService implements ISellerService {
         }
         return "Seller Approved.";
     }
-
+    @Override
     public String RejectSeller(long Id) {
         var s = sellerRepository.findById(Id);
         if (s.isPresent()) {
@@ -62,9 +62,18 @@ public class SellerService implements ISellerService {
         }
         return "Seller Reject.";
     }
-
+    @Override
     public Page<Seller> findAll(@PageableDefault(size = 50) Pageable pageable) {
         return sellerRepository.findAll(pageable);
+    }
+
+    @Override
+    public Seller getSeller(long id) {
+        var s = sellerRepository.findById(id);
+        if (s.isPresent())
+            return s.get();
+        else
+            return new Seller();
     }
 
 
