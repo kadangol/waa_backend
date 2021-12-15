@@ -50,11 +50,11 @@ public class User {
     private int isDeleted;
 
     @JsonBackReference
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Seller seller;
 
     @JsonBackReference
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Buyer buyer;
 
 
@@ -71,7 +71,13 @@ public class User {
         this.fullName = fullName;
         this.phone = phone;
         this.seller = seller;
+        if(seller != null){
+            this.seller.setUser(this);
+        }
         this.buyer = buyer;
+        if (this.buyer != null){
+            this.buyer.setUser(this);
+        }
         this.roles = roles;
     }
 }
