@@ -21,10 +21,6 @@ public class BuyerUpdateDTO {
 
     private int points;
 
-    private List<Seller> followedSellers;
-
-    private List<Review> reviews;
-
     private Address shippingAddress;
 
 }

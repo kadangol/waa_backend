@@ -51,6 +51,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/seller/{id}/reject").hasAuthority(ERole.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/seller/{id}/profile").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_SELLER.toString())
 
+                .antMatchers(HttpMethod.GET, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.GET, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.PUT, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.DELETE, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
+
+
+
 //                .antMatchers(HttpMethod.GET, "/sub-category/get-all").permitAll()
 //                .antMatchers(HttpMethod.GET, "/sub-category/get/{id:[\\d]+}").permitAll()
 //                .antMatchers(HttpMethod.POST, "/sub-category").permitAll()
