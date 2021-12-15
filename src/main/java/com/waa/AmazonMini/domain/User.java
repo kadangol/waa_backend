@@ -1,5 +1,7 @@
 package com.waa.AmazonMini.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.waa.AmazonMini.auth.model.Role;
 import lombok.*;
 
@@ -28,11 +30,12 @@ public class User {
     private String username;
     @NotNull
     @NotEmpty
+    @JsonIgnore
     private String password;
 
     @NotBlank
     @Size(max = 50)
-//    @Email
+    @Email
     private String email ;
 
     @NotNull
@@ -46,9 +49,11 @@ public class User {
     @Column(columnDefinition="int default 0")
     private int isDeleted;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "user")
     private Seller seller;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "user")
     private Buyer buyer;
 

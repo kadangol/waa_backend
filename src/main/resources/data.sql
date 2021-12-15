@@ -17,5 +17,6 @@ INSERT INTO users (id, email, password, username, FULLNAME) VALUES (103, 'buyer@
 INSERT INTO user_roles (user_id, role_id) VALUES (100, 1);
 INSERT INTO user_roles (user_id, role_id) VALUES (102, 2);
 INSERT INTO user_roles (user_id, role_id) VALUES (103, 3);
+INSERT INTO seller(id, approvalstatus, userid) VALUES (1,0,102);
 -- SELECT * from buyer;
 --End of inserting User data
