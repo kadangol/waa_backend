@@ -1,5 +1,6 @@
 package com.waa.AmazonMini.configuration;
 
+import com.waa.AmazonMini.auth.model.ERole;
 import com.waa.AmazonMini.auth.security.jwt.AuthEntryPointJwt;
 import com.waa.AmazonMini.auth.security.jwt.AuthTokenFilter;
 import com.waa.AmazonMini.auth.security.services.UserDetailsServiceImpl;
@@ -45,7 +46,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //               .antMatchers(HttpMethod.GET, "/category/get-all").permitAll()
 //                .antMatchers(HttpMethod.GET, "/category/get/{id:[\\d]+}").permitAll()
-//               .antMatchers(HttpMethod.POST, "/buyer").hasAuthority("ROLE_BUYER")
+               .antMatchers(HttpMethod.GET, "/seller").hasAuthority(ERole.ROLE_SELLER.toString())
+                .antMatchers(HttpMethod.PUT, "/seller/{id}/approve").hasAuthority(ERole.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.PUT, "/seller/{id}/reject").hasAuthority(ERole.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/seller/{id}/profile").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_SELLER.toString())
+
 //                .antMatchers(HttpMethod.GET, "/sub-category/get-all").permitAll()
 //                .antMatchers(HttpMethod.GET, "/sub-category/get/{id:[\\d]+}").permitAll()
 //                .antMatchers(HttpMethod.POST, "/sub-category").permitAll()
