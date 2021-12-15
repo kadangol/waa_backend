@@ -29,7 +29,16 @@ public class BuyerService implements IBuyerService {
 
     @Override
     public ResponseMessage update(BuyerUpdateDTO buyerUpdateDTO) {
-        return null;
+        var buyer = buyerRepository.findById(buyerUpdateDTO.getId());
+        if(buyer.isPresent()){
+            var b = buyer.get();
+            b.setPoints(buyerUpdateDTO.getPoints());
+            b.setShippingAddress(buyerUpdateDTO.getShippingAddress());
+            return new ResponseMessage("Buyer Update", HttpStatus.OK, b);
+        }
+
+        return  new ResponseMessage("Buyer not found", HttpStatus.NOT_FOUND);
+
     }
 
     @Override

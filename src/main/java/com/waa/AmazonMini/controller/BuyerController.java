@@ -34,18 +34,13 @@ public class BuyerController {
         return buyerService.findAll(pageable);
     }
 
-//    @PostMapping
-//    public ResponseMessage add(@RequestBody BuyerSaveDTO dto){
-//        return buyerService.save(dto);
-//    }
-
     @PutMapping
     public ResponseMessage update(@RequestBody BuyerUpdateDTO dto) {
         return buyerService.update(dto);
     }
 
     @DeleteMapping("/{buyerId}")
-    public ResponseMessage delete(@PathVariable("buyerId") Long productId) {
-        return buyerService.delete(productId);
+    public ResponseMessage delete(@PathVariable("buyerId") Long buyerId) {
+        return buyerService.delete(buyerId);
     }
 }
