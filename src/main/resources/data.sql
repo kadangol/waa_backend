@@ -18,5 +18,4 @@ INSERT INTO user_roles (user_id, role_id) VALUES (100, 1);
 INSERT INTO user_roles (user_id, role_id) VALUES (102, 2);
 INSERT INTO user_roles (user_id, role_id) VALUES (103, 3);
 INSERT INTO seller(id, approvalstatus, userid) VALUES (1,0,102);
--- SELECT * from buyer;
---End of inserting User data
+insert into  buyer(id, points, city, state, street, zipcode, userid) values(1, 50, 'Fairfield','IA', '100 North', '52557', 103);

@@ -13,9 +13,9 @@ import java.util.List;
 
 
 public interface IBuyerService {
-    ResponseMessage save(BuyerSaveDTO productSaveDTO);
+//    ResponseMessage save(BuyerSaveDTO buyerSaveDTO);
 
-    ResponseMessage update(BuyerUpdateDTO productUpdateDTO);
+    ResponseMessage update(BuyerUpdateDTO buyerUpdateDTO);
 
     ResponseMessage delete(Long id);
 
@@ -23,5 +23,4 @@ public interface IBuyerService {
 
     Buyer findById(Long id);
 
-    List<Buyer> findAll();
 }
