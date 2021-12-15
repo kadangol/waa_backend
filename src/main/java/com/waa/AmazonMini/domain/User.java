@@ -2,6 +2,7 @@ package com.waa.AmazonMini.domain;
 
 import com.waa.AmazonMini.auth.model.Role;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -46,10 +47,10 @@ public class User {
     @Column(columnDefinition="int default 0")
     private int isDeleted;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Seller seller;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Buyer buyer;
 
 
@@ -66,7 +67,14 @@ public class User {
         this.fullName = fullName;
         this.phone = phone;
         this.seller = seller;
+        if(seller != null){
+            this.setIsDeleted(0);
+            this.seller.setUser(this);
+        }
         this.buyer = buyer;
+        if(buyer != null){
+            this.buyer.setUser(this);
+        }
         this.roles = roles;
     }
 }
