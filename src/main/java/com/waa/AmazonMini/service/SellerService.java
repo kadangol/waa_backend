@@ -44,7 +44,7 @@ public class SellerService implements ISellerService {
     PasswordEncoder encoder;
 
     @Override
-    public Seller registerSeller(SellerSaveDTO dto)  {
+    public Seller registerSeller(SellerSaveDTO dto) {
         if (userRepository.existsByUsername(dto.getUserName())) {
             throw new RuntimeException("Error: Username is already taken!");
         }
@@ -87,6 +87,7 @@ public class SellerService implements ISellerService {
         }
         return "Seller Approved.";
     }
+
     @Override
     public String RejectSeller(long Id) {
         var s = sellerRepository.findById(Id);
@@ -97,6 +98,7 @@ public class SellerService implements ISellerService {
         }
         return "Seller Reject.";
     }
+
     @Override
     public Page<Seller> findAll(@PageableDefault(size = 50) Pageable pageable) {
         return sellerRepository.findAll(pageable);
@@ -111,6 +113,13 @@ public class SellerService implements ISellerService {
             return new Seller();
     }
 
+    public Seller getSellerByUserId(long userId) {
+        var s = sellerRepository.findByUserId1(userId);
+        if (s != null)
+            return s;
+        else
+            return new Seller();
+    }
 
 }
 
