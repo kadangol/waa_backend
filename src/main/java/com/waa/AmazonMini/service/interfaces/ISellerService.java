@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 
 public interface ISellerService {
-    Seller registerSeller(SellerSaveDTO dto);
+    Seller registerSeller(SellerSaveDTO dto) throws Exception;
 
     String ApproveSeller(long Id);
 

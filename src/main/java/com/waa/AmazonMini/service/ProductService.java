@@ -4,9 +4,11 @@ import com.waa.AmazonMini.domain.Product;
 import com.waa.AmazonMini.dto.ProductSaveDTO;
 import com.waa.AmazonMini.dto.ProductUpdateDTO;
 import com.waa.AmazonMini.repository.ProductRepository;
+import com.waa.AmazonMini.repository.SellerRepository;
 import com.waa.AmazonMini.service.interfaces.IProductService;
 import com.waa.AmazonMini.utils.LocalUtil;
 import com.waa.AmazonMini.utils.dto.ResponseMessage;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,12 +27,15 @@ public class ProductService implements IProductService {
 
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    SellerService sellerService;
 
     @Override
     public ResponseMessage save(ProductSaveDTO dto) {
-        Product airport = new Product(dto.getName(), dto.getDescription(), dto.getPricePerUnit(), dto.getSeller(), dto.getPhotoes());
-        Product savedProduct = productRepository.save(airport);
-        return new ResponseMessage(SUCCESSFUL_MESSAGE, HttpStatus.OK, savedProduct.toString());
+        var seller = sellerService.getSeller(dto.getSellerId());
+        Product product = new Product(dto.getName(), dto.getDescription(), dto.getPricePerUnit(), dto.getQuantity(), seller, null);
+        Product savedProduct = productRepository.save(product);
+        return new ResponseMessage(SUCCESSFUL_MESSAGE, HttpStatus.OK, savedProduct);
     }
 
     @Override
@@ -41,7 +46,7 @@ public class ProductService implements IProductService {
             fromDB.setDescription(dto.getDescription());
             fromDB.setPricePerUnit(dto.getPricePerUnit());
             fromDB.setPhotoes(dto.getPhotoes());
-            return new ResponseMessage(SUCCESSFUL_MESSAGE, HttpStatus.OK, LocalUtil.getMessage("AirportId", fromDB.getId()));
+            return new ResponseMessage(SUCCESSFUL_MESSAGE, HttpStatus.OK, LocalUtil.getMessage("productId", fromDB.getId()));
         } else {
             return new ResponseMessage(DATA_NOT_FOUND_TO_UPDATE, HttpStatus.CONFLICT);
         }

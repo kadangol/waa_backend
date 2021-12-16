@@ -14,7 +14,7 @@ spring:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         database-platform: org.hibernate.dialect.PostgreSQL9Dialect
@@ -28,4 +28,4 @@ spring:
     init:
       mode: always
 server:
-  port: 8082
+  port: 8080

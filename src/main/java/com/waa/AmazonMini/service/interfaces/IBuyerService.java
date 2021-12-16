@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public interface IBuyerService {
-//    ResponseMessage save(BuyerSaveDTO buyerSaveDTO);
+    Buyer registerBuyer(BuyerSaveDTO buyerSaveDTO);
 
     ResponseMessage update(BuyerUpdateDTO buyerUpdateDTO);
 

@@ -24,6 +24,10 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
 
+    @PostMapping("sign-up")
+    public Seller SignupSeller(@RequestBody SellerSaveDTO dto){
+        return sellerService.registerSeller(dto);
+    }
 
     @GetMapping(params = "paged=true")
     public Page<Seller> findAllPageable(org.springframework.data.domain.Pageable pageable){

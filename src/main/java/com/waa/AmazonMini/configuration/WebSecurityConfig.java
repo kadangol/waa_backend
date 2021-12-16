@@ -46,16 +46,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //               .antMatchers(HttpMethod.GET, "/category/get-all").permitAll()
 //                .antMatchers(HttpMethod.GET, "/category/get/{id:[\\d]+}").permitAll()
-               .antMatchers(HttpMethod.GET, "/seller").hasAuthority(ERole.ROLE_SELLER.toString())
+
+                .antMatchers(HttpMethod.POST, "/seller/sign-up").permitAll()
+                .antMatchers(HttpMethod.GET, "/seller").hasAuthority(ERole.ROLE_SELLER.toString())
                 .antMatchers(HttpMethod.PUT, "/seller/{id}/approve").hasAuthority(ERole.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.PUT, "/seller/{id}/reject").hasAuthority(ERole.ROLE_ADMIN.toString())
-                .antMatchers(HttpMethod.GET, "/seller/{id}/profile").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_SELLER.toString())
+                .antMatchers(HttpMethod.GET, "/seller/{id}/profile").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_SELLER.toString())
 
-                .antMatchers(HttpMethod.GET, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
-                .antMatchers(HttpMethod.GET, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
-                .antMatchers(HttpMethod.PUT, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
-                .antMatchers(HttpMethod.DELETE, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_BUYER.toString())
-
+                .antMatchers(HttpMethod.POST, "/buyer/sign-up").permitAll()
+                .antMatchers(HttpMethod.GET, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.GET, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.PUT, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.DELETE, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
 
 
 //                .antMatchers(HttpMethod.GET, "/sub-category/get-all").permitAll()

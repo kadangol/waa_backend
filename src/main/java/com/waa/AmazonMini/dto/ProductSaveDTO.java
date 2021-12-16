@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
@@ -20,9 +22,12 @@ public class ProductSaveDTO {
     @NonNull
     private double pricePerUnit;
 
-    @NonNull
-    private Seller seller;
+    @NotEmpty
+    private int quantity;
 
     @NonNull
-    private List<Photo> photoes;
+    private Long sellerId;
+
+
+
 }

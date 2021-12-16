@@ -1,9 +1,11 @@
 package com.waa.AmazonMini.controller;
 
 import com.waa.AmazonMini.domain.Buyer;
+import com.waa.AmazonMini.domain.Seller;
 import com.waa.AmazonMini.dto.BuyerSaveDTO;
 import com.waa.AmazonMini.dto.BuyerUpdateDTO;
 import com.waa.AmazonMini.dto.ProductUpdateDTO;
+import com.waa.AmazonMini.dto.SellerSaveDTO;
 import com.waa.AmazonMini.service.interfaces.IBuyerService;
 import com.waa.AmazonMini.utils.dto.ResponseMessage;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,14 @@ public class BuyerController {
     public BuyerController(IBuyerService buyerService) {
         this.buyerService = buyerService;
     }
+
+
+
+    @PostMapping("sign-up")
+    public Buyer SignupBuyer(@RequestBody BuyerSaveDTO dto){
+        return buyerService.registerBuyer(dto);
+    }
+
 
     @GetMapping("/{buyerId}")
     public Buyer findById(@PathVariable("buyerId") Long buyerId){
