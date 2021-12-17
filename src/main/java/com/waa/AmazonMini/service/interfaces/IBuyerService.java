@@ -4,8 +4,10 @@ import com.waa.AmazonMini.domain.Buyer;
 import com.waa.AmazonMini.dto.BuyerSaveDTO;
 import com.waa.AmazonMini.dto.BuyerUpdateDTO;
 import com.waa.AmazonMini.utils.dto.ResponseMessage;
+import lombok.var;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,5 +24,9 @@ public interface IBuyerService {
     Page<Buyer> findAll(Pageable pageable);
 
     Buyer findById(Long id);
+
+    ResponseMessage followSeller(long sellerId);
+
+    ResponseMessage unfollowSeller(long sellerId);
 
 }

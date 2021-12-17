@@ -12,6 +12,7 @@ import com.waa.AmazonMini.dto.BuyerSaveDTO;
 import com.waa.AmazonMini.dto.BuyerUpdateDTO;
 import com.waa.AmazonMini.dto.BuyerSaveDTO;
 import com.waa.AmazonMini.repository.BuyerRepository;
+import com.waa.AmazonMini.repository.SellerRepository;
 import com.waa.AmazonMini.service.interfaces.IBuyerService;
 import com.waa.AmazonMini.utils.dto.ResponseMessage;
 import com.waa.AmazonMini.utils.enums.Status;
@@ -21,6 +22,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +48,11 @@ public class BuyerService implements IBuyerService {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    private SellerRepository sellerRepository;
+
     @Override
-    public Buyer registerBuyer(BuyerSaveDTO dto)  {
+    public Buyer registerBuyer(BuyerSaveDTO dto) {
         if (userRepository.existsByUsername(dto.getUserName())) {
             throw new RuntimeException("Error: Username is already taken!");
         }
@@ -85,14 +91,14 @@ public class BuyerService implements IBuyerService {
     @Override
     public ResponseMessage update(BuyerUpdateDTO buyerUpdateDTO) {
         var buyer = buyerRepository.findById(buyerUpdateDTO.getId());
-        if(buyer.isPresent()){
+        if (buyer.isPresent()) {
             var b = buyer.get();
             b.setPoints(buyerUpdateDTO.getPoints());
             b.setShippingAddress(buyerUpdateDTO.getShippingAddress());
             return new ResponseMessage("Buyer Update", HttpStatus.OK, b);
         }
 
-        return  new ResponseMessage("Buyer not found", HttpStatus.NOT_FOUND);
+        return new ResponseMessage("Buyer not found", HttpStatus.NOT_FOUND);
 
     }
 
@@ -102,7 +108,7 @@ public class BuyerService implements IBuyerService {
         if (buyer.isPresent()) {
             buyer.get().getUser().setIsDeleted(1);
         }
-       return  new ResponseMessage("Buyer Deleted", HttpStatus.OK);
+        return new ResponseMessage("Buyer Deleted", HttpStatus.OK);
     }
 
 
@@ -127,6 +133,43 @@ public class BuyerService implements IBuyerService {
             return s;
         else
             return new Buyer();
+    }
+
+
+    public ResponseMessage followSeller(long sellerId) {
+        var buyer = getBuyerFromJWT();
+        var seller =  sellerRepository.getById(sellerId);
+        if(seller == null)
+        {
+            return new ResponseMessage("Seller not found.");
+        }
+        if(!buyer.getFollowedSellers().contains(seller)){
+            buyer.getFollowedSellers().add(seller);
+            buyerRepository.save(buyer);
+        }
+        return new ResponseMessage("Seller followed.", HttpStatus.OK);
+    }
+
+    public ResponseMessage unfollowSeller(long sellerId) {
+        var buyer = getBuyerFromJWT();
+        var seller =  sellerRepository.getById(sellerId);
+        if(seller == null)
+        {
+            return new ResponseMessage("Seller not found.");
+        }
+        if(buyer.getFollowedSellers().contains(seller)){
+            buyer.getFollowedSellers().remove(seller);
+            buyerRepository.save(buyer);
+        }
+        return new ResponseMessage("Seller unfollowed.", HttpStatus.OK);
+    }
+
+    public Buyer getBuyerFromJWT() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        var user = userRepository.findByUsername(userDetails.getUsername());
+        var buyer = buyerRepository.findByUserId1(user.get().getId());
+        return buyer;
     }
 
 }

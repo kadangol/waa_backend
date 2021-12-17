@@ -4,6 +4,7 @@ import com.waa.AmazonMini.auth.model.ERole;
 import com.waa.AmazonMini.auth.security.jwt.AuthEntryPointJwt;
 import com.waa.AmazonMini.auth.security.jwt.AuthTokenFilter;
 import com.waa.AmazonMini.auth.security.services.UserDetailsServiceImpl;
+import com.waa.AmazonMini.utils.dto.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Configuration
 @EnableWebSecurity
@@ -51,13 +55,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/seller").hasAuthority(ERole.ROLE_SELLER.toString())
                 .antMatchers(HttpMethod.PUT, "/seller/{id}/approve").hasAuthority(ERole.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.PUT, "/seller/{id}/reject").hasAuthority(ERole.ROLE_ADMIN.toString())
-                .antMatchers(HttpMethod.GET, "/seller/{id}/profile").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_SELLER.toString())
+                .antMatchers(HttpMethod.GET, "/seller/{id}/profile").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_SELLER.toString(), ERole.ROLE_BUYER.toString())
 
                 .antMatchers(HttpMethod.POST, "/buyer/sign-up").permitAll()
                 .antMatchers(HttpMethod.GET, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.GET, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.PUT, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.DELETE, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.DELETE, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.DELETE, "/buyer/follow/{sellerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.DELETE, "/buyer/unfollow/{sellerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
 
 
                 .antMatchers(HttpMethod.GET, "/product").permitAll()
@@ -68,6 +75,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/orderline/addToCart").hasAuthority(ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.POST, "/orderline/*").hasAuthority(ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.POST, "/orderline/purchaseOrder/{orderLineId}").hasAuthority(ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.POST, "/orderline/cancelOrder/{orderLineId}").hasAnyAuthority(ERole.ROLE_BUYER.toString(), ERole.ROLE_SELLER.toString())
+                .antMatchers(HttpMethod.POST, "/orderline/updateOrderShippingStatus").hasAnyAuthority(ERole.ROLE_BUYER.toString(), ERole.ROLE_SELLER.toString())
+                .antMatchers(HttpMethod.POST, "/orderline/updateOrderStatus").hasAnyAuthority(ERole.ROLE_BUYER.toString(), ERole.ROLE_SELLER.toString())
+                .antMatchers(HttpMethod.POST, "/orderline/{orderLineId}").hasAnyAuthority(ERole.ROLE_BUYER.toString(), ERole.ROLE_SELLER.toString())
+
 
 //                .antMatchers(HttpMethod.GET, "/sub-category/get-all").permitAll()
 //                .antMatchers(HttpMethod.GET, "/sub-category/get/{id:[\\d]+}").permitAll()

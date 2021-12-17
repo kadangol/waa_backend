@@ -25,6 +25,4 @@ public class ProductSaveDTO {
     @NotEmpty
     private int quantity;
 
-
-
 }

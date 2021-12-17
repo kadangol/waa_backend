@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
+import java.util.List;
 
 @RestController
 @RequestMapping("/seller")
@@ -49,6 +50,11 @@ public class SellerController {
     @GetMapping("/{id}/profile")
     public ResponseMessage getProfile(@PathVariable(value = "id") long Id) {
         return new ResponseMessage("Seller Info", HttpStatus.OK, sellerService.getSeller(Id));
+    }
+
+    @GetMapping("/unapprovedSellers")
+    public List<Seller> getUnApprovedSeller() {
+        return sellerService.getUnApprovedSeller();
     }
 
 }

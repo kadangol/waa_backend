@@ -63,6 +63,16 @@ public class ProductService implements IProductService {
         }
     }
 
+    public ResponseMessage updateQuantity(long productId, int qty) {
+        Product fromDB = productRepository.getById(productId);
+        if (fromDB != null) {
+            fromDB.setQuantity(qty);
+            return new ResponseMessage(SUCCESSFUL_MESSAGE, HttpStatus.OK, LocalUtil.getMessage("productId", fromDB.getId()));
+        } else {
+            return new ResponseMessage(DATA_NOT_FOUND_TO_UPDATE, HttpStatus.CONFLICT);
+        }
+    }
+
     @Override
     public ResponseMessage delete(Long id) {
         Product product = findById(id);

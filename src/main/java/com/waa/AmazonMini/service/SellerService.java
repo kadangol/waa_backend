@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -120,6 +121,19 @@ public class SellerService implements ISellerService {
         else
             return new Seller();
     }
+
+    public List<Seller> getUnApprovedSeller() {
+        var s = sellerRepository.findSellerByApprovalStatus(Status.NOTAPPROVEDYET);
+        return  s;
+    }
+
+    public List<Seller> getApprovedSeller() {
+        var s = sellerRepository.findSellerByApprovalStatus(Status.APPROVED);
+        return  s;
+    }
+
+
+
 
 }
 
