@@ -56,6 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //               .antMatchers(HttpMethod.GET, "/category/get-all").permitAll()
 //                .antMatchers(HttpMethod.GET, "/category/get/{id:[\\d]+}").permitAll()
 
+                .antMatchers(HttpMethod.GET, "/email").permitAll()
+
                 .antMatchers(HttpMethod.POST, "/seller/sign-up").permitAll()
                 .antMatchers(HttpMethod.GET, "/seller").hasAuthority(ERole.ROLE_SELLER.toString())
                 .antMatchers(HttpMethod.PUT, "/seller/{id}/approve").hasAuthority(ERole.ROLE_ADMIN.toString())

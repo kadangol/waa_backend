@@ -39,6 +39,9 @@ public class OrderLineService implements IOrderLineService {
     @Autowired
     private BuyerRepository buyerRepository;
 
+    @Autowired
+    private EmailService emailService;
+
 //    private Product product;
 
     @Override
@@ -65,7 +68,7 @@ public class OrderLineService implements IOrderLineService {
         orderLine.setBuyer(buyer);
         orderLineRepository.save(orderLine);
 
-
+        emailService.sendOrderLineStatusChangeEmail(orderLine);
         return new ResponseMessage("Product saved.", HttpStatus.OK, orderLine);
     }
 
@@ -93,6 +96,7 @@ public class OrderLineService implements IOrderLineService {
 
         productService.updateQuantity(orderline.getProduct().getId(), (orderline.getProduct().getQuantity() - orderline.getQuantity()));
 
+        emailService.sendOrderLineStatusChangeEmail(orderline);
         return new ResponseMessage("Order Successful.", HttpStatus.OK);
     }
 
@@ -103,6 +107,8 @@ public class OrderLineService implements IOrderLineService {
         }
         orderline.setOrderStatus(OrderStatus.CANCELLED);
         orderLineRepository.save(orderline);
+
+        emailService.sendOrderLineStatusChangeEmail(orderline);
         return new ResponseMessage("Order Cancelled.", HttpStatus.OK);
     }
 
@@ -110,6 +116,9 @@ public class OrderLineService implements IOrderLineService {
         var orderline = orderLineRepository.getById(dto.getOrderLineId());
         orderline.setShippingStatus(dto.getShippingStatus());
         orderLineRepository.save(orderline);
+
+        emailService.sendOrderLineStatusChangeEmail(orderline);
+
         return new ResponseMessage("ShippingStatus updated.", HttpStatus.OK);
     }
 
@@ -117,6 +126,10 @@ public class OrderLineService implements IOrderLineService {
         var orderline = orderLineRepository.getById(dto.getOrderLineId());
         orderline.setOrderStatus(dto.getOrderStatus());
         orderLineRepository.save(orderline);
+
+
+        emailService.sendOrderLineStatusChangeEmail(orderline);
+
         return new ResponseMessage("Order status updated.", HttpStatus.OK);
     }
 
