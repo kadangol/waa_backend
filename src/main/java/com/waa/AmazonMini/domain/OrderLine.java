@@ -44,4 +44,23 @@ public class OrderLine {
     @ManyToOne
     @JoinColumn(name= "product_id")
     private Product product;
+
+
+
+    public String getEmailString(){
+        String details = "Dear  " + this.getBuyer().getUser().getFullName() + ",\n\n";
+        details += "Your order detailes changed"  + "\n" +
+                "Your order status: " + this.getOrderStatus() + ",\n" +
+                "Order details: \n" +
+                "Product:" + this.getProduct().getName() + "\n" +
+                "Quantity:" + this.getProduct().getQuantity() + "\n" +
+                "Price per unit:" + this.getProduct().getPricePerUnit() + "\n" +
+                "Overall price:" + this.getProduct().getPricePerUnit() * this.getProduct().getQuantity() + "\n" +
+                "Shipping status:" + this.getShippingStatus() + "\n" +
+                "Purchased at:" + this.getPurchasedTime() + "\n" +
+                "Shipping status:" + this.getShippingStatus()+ "\n" +
+                "Shipping address:" + this.getShippingAddress()+ "\n\n" +
+                "MiniAmazon team\nminiAmazon.com";
+        return details;
+    }
 }

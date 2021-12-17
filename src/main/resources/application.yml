@@ -32,5 +32,19 @@ spring:
   sql:
     init:
       mode: always
+  mail:
+    host: smtp.gmail.com
+    username: komiljon.ali.f@gmail.com
+    password: qwertyuiop112
+    port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable=true
+demo:
+  db:
+    name:
+      mailfrom: komiljon.ali.f@gmail.com
 server:
   port: 8080
