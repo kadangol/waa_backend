@@ -30,9 +30,9 @@ public class Buyer {
             inverseJoinColumns = @JoinColumn(name="seller_id", referencedColumnName = "Id"))
     private List<Seller> followedSellers;
 
-    @OneToMany
-    @JoinColumn(name="buyer_review")
-    private List<Review> reviews;
+//    @OneToMany
+//    @JoinColumn(name="buyer_review")
+//    private List<Review> reviews;
 
     @Embedded
     @NonNull

@@ -4,7 +4,9 @@ import com.waa.AmazonMini.auth.model.ERole;
 import com.waa.AmazonMini.auth.security.jwt.AuthEntryPointJwt;
 import com.waa.AmazonMini.auth.security.jwt.AuthTokenFilter;
 import com.waa.AmazonMini.auth.security.services.UserDetailsServiceImpl;
+import com.waa.AmazonMini.domain.Review;
 import com.waa.AmazonMini.utils.dto.ResponseMessage;
+import com.waa.AmazonMini.utils.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +21,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -63,8 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.DELETE, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.DELETE, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
-                .antMatchers(HttpMethod.DELETE, "/buyer/follow/{sellerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
-                .antMatchers(HttpMethod.DELETE, "/buyer/unfollow/{sellerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.PUT, "/buyer/follow/{sellerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.PUT, "/buyer/unfollow/{sellerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
 
 
                 .antMatchers(HttpMethod.GET, "/product").permitAll()
@@ -80,6 +85,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/orderline/updateOrderShippingStatus").hasAnyAuthority(ERole.ROLE_BUYER.toString(), ERole.ROLE_SELLER.toString())
                 .antMatchers(HttpMethod.POST, "/orderline/updateOrderStatus").hasAnyAuthority(ERole.ROLE_BUYER.toString(), ERole.ROLE_SELLER.toString())
                 .antMatchers(HttpMethod.POST, "/orderline/{orderLineId}").hasAnyAuthority(ERole.ROLE_BUYER.toString(), ERole.ROLE_SELLER.toString())
+
+                .antMatchers(HttpMethod.POST, "/review").hasAuthority(ERole.ROLE_BUYER.toString())
+                .antMatchers(HttpMethod.PUT, "/review/approve/{reviewId}").hasAuthority(ERole.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.PUT, "/review/reject/{reviewId}").hasAuthority(ERole.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/review/notapprovedyet").hasAuthority(ERole.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/review/approved").hasAuthority(ERole.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/review/rejected").hasAuthority(ERole.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/review/product/{productId}").permitAll()
+
 
 
 //                .antMatchers(HttpMethod.GET, "/sub-category/get-all").permitAll()

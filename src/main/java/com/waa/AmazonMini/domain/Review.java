@@ -1,15 +1,14 @@
 package com.waa.AmazonMini.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.waa.AmazonMini.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -20,13 +19,23 @@ public class Review {
     @GeneratedValue
     @Id
     private long id;
-    @NonNull
-    @Size(max = 1, min = 1)
-    private int scale;
 
     @NonNull
     private String comment;
 
     @NonNull
     private Status status;
+
+
+    @OneToOne
+    @JoinColumn(name = "productId", nullable = false)
+    @JsonBackReference
+    private Product product;
+
+    @OneToOne
+    @JoinColumn(name = "buyerId", nullable = false)
+    @JsonBackReference
+    private Buyer buyer;
+
+
 }
