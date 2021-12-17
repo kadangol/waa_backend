@@ -9,6 +9,7 @@ import com.waa.AmazonMini.auth.repository.UserRepository;
 import com.waa.AmazonMini.auth.security.jwt.JwtUtils;
 import com.waa.AmazonMini.auth.security.services.UserDetailsImpl;
 import com.waa.AmazonMini.domain.User;
+import com.waa.AmazonMini.service.BuyerService;
 import com.waa.AmazonMini.service.SellerService;
 import com.waa.AmazonMini.utils.dto.ResponseMessage;
 import com.waa.AmazonMini.utils.enums.Status;
@@ -17,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,6 +60,9 @@ public class AuthController {
     @Autowired
     private SellerService sellerService;
 
+    @Autowired
+    BuyerService buyerService;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -73,18 +78,26 @@ public class AuthController {
                 .collect(Collectors.toList());
 
 
+        long sellerId = 0;
+        long buyerId = 0;
         if (userDetails.getAuthorities().iterator().next().toString().equals(ERole.ROLE_SELLER.toString())) {
             var seller = sellerService.getSellerByUserId(userDetails.getId());
+            sellerId = seller.getId();
             if (seller.getApprovalStatus() == Status.NOTAPPROVEDYET) {
-                return ResponseEntity.ok(new ResponseMessage("User is not approved by admin yet."));
+                return ResponseEntity.ok(new ResponseMessage(Status.NOTAPPROVEDYET.toString(), HttpStatus.OK));
             }
+        }
+
+        if (userDetails.getAuthorities().iterator().next().toString().equals(ERole.ROLE_BUYER.toString())) {
+            var buyer = buyerService.getBuyerByUserId(userDetails.getId());
+            buyerId = buyer.getId();
         }
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles, buyerId, sellerId));
     }
 
 //	@PostMapping("/signup")

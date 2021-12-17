@@ -1,21 +1,34 @@
 package com.waa.AmazonMini.auth.payload.response;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.List;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class JwtResponse {
+	@JsonIgnore
 	private String token;
+	@JsonIgnore
 	private String type = "Bearer";
 	private Long id;
 	private String username;
 	private String email;
 	private List<String> roles;
+	long buyerId;
+	long sellerId;
 
-	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles, long buyerId, long sellerId) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+		this.buyerId = buyerId;
+		this.sellerId = sellerId;
 	}
 
 	public String getAccessToken() {
