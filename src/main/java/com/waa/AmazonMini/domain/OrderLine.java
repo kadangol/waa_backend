@@ -1,5 +1,7 @@
 package com.waa.AmazonMini.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.waa.AmazonMini.utils.enums.OrderStatus;
 import com.waa.AmazonMini.utils.enums.ShippingStatus;
 import lombok.AllArgsConstructor;
@@ -15,8 +17,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 public class OrderLine {
     @Id
     @GeneratedValue
@@ -25,7 +25,7 @@ public class OrderLine {
     private int quantity;
     @NonNull
     @Embedded
-    private Address billingAddress;//TODO not sure what is BillingAddress
+    private Address shippingAddress;//TODO not sure what is BillingAddress
     @NonNull
     private LocalDateTime purchasedTime;
     @NonNull
@@ -37,5 +37,11 @@ public class OrderLine {
     private OrderStatus orderStatus;
     @ManyToOne
     @JoinColumn(name="buyer_id")
+//    @JsonManagedReference
+    @JsonIgnore
     private Buyer buyer;
+
+    @ManyToOne
+    @JoinColumn(name= "product_id")
+    private Product product;
 }

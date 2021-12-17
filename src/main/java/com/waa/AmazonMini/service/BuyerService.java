@@ -6,6 +6,7 @@ import com.waa.AmazonMini.auth.repository.RoleRepository;
 import com.waa.AmazonMini.auth.repository.UserRepository;
 import com.waa.AmazonMini.domain.Buyer;
 import com.waa.AmazonMini.domain.Buyer;
+import com.waa.AmazonMini.domain.Seller;
 import com.waa.AmazonMini.domain.User;
 import com.waa.AmazonMini.dto.BuyerSaveDTO;
 import com.waa.AmazonMini.dto.BuyerUpdateDTO;
@@ -119,5 +120,13 @@ public class BuyerService implements IBuyerService {
         return buyerRepository.findAll(pageable);
     }
 
+
+    public Buyer getBuyerByUserId(long userId) {
+        var s = buyerRepository.findByUserId1(userId);
+        if (s != null)
+            return s;
+        else
+            return new Buyer();
+    }
 
 }

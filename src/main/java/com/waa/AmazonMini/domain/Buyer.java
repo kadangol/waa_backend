@@ -39,6 +39,7 @@ public class Buyer {
     private Address shippingAddress;
 
     @OneToMany(mappedBy = "buyer")
+//    @JsonBackReference
     private List<OrderLine> orderLines;
 
 

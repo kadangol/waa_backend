@@ -25,9 +25,6 @@ public class ProductSaveDTO {
     @NotEmpty
     private int quantity;
 
-    @NonNull
-    private Long sellerId;
-
 
 
 }

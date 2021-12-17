@@ -1,5 +1,6 @@
 package com.waa.AmazonMini.service;
 
+import com.waa.AmazonMini.auth.repository.UserRepository;
 import com.waa.AmazonMini.domain.Product;
 import com.waa.AmazonMini.dto.ProductSaveDTO;
 import com.waa.AmazonMini.dto.ProductUpdateDTO;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +32,18 @@ public class ProductService implements IProductService {
     ProductRepository productRepository;
     @Autowired
     SellerService sellerService;
+    @Autowired
+    UserRepository userRepository;
+
 
     @Override
     public ResponseMessage save(ProductSaveDTO dto) {
-        var seller = sellerService.getSeller(dto.getSellerId());
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        var user = userRepository.findByUsername(userDetails.getUsername());
+        var seller = sellerService.getSellerByUserId(user.get().getId());
+
         Product product = new Product(dto.getName(), dto.getDescription(), dto.getPricePerUnit(), dto.getQuantity(), seller, null);
         Product savedProduct = productRepository.save(product);
         return new ResponseMessage(SUCCESSFUL_MESSAGE, HttpStatus.OK, savedProduct);
@@ -41,7 +52,7 @@ public class ProductService implements IProductService {
     @Override
     public ResponseMessage update(ProductUpdateDTO dto) {
         Product fromDB = productRepository.getById(dto.getId());
-        if (fromDB != null){
+        if (fromDB != null) {
             fromDB.setName(dto.getName());
             fromDB.setDescription(dto.getDescription());
             fromDB.setPricePerUnit(dto.getPricePerUnit());
