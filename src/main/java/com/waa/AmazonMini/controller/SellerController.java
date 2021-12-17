@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
@@ -56,5 +57,9 @@ public class SellerController {
     public List<Seller> getUnApprovedSeller() {
         return sellerService.getUnApprovedSeller();
     }
+
+
+
+
 
 }

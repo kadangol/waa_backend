@@ -62,6 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/seller/{id}/reject").hasAuthority(ERole.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/seller/{id}/profile").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_SELLER.toString(), ERole.ROLE_BUYER.toString())
 
+
+
                 .antMatchers(HttpMethod.POST, "/buyer/sign-up").permitAll()
                 .antMatchers(HttpMethod.GET, "/buyer").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.GET, "/buyer/{buyerId}").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_BUYER.toString())
@@ -77,6 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/product").hasAuthority(ERole.ROLE_SELLER.toString())
                 .antMatchers(HttpMethod.PUT, "/product").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_SELLER.toString())
                 .antMatchers(HttpMethod.DELETE, "/product").hasAnyAuthority(ERole.ROLE_ADMIN.toString(), ERole.ROLE_SELLER.toString())
+                .antMatchers(HttpMethod.GET, "/product/findProductBySeller/{sellerId}").hasAnyAuthority(ERole.ROLE_SELLER.toString())
 
                 .antMatchers(HttpMethod.POST, "/orderline/addToCart").hasAuthority(ERole.ROLE_BUYER.toString())
                 .antMatchers(HttpMethod.POST, "/orderline/*").hasAuthority(ERole.ROLE_BUYER.toString())

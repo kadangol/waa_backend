@@ -5,6 +5,7 @@ import com.waa.AmazonMini.auth.model.Role;
 import com.waa.AmazonMini.auth.payload.response.MessageResponse;
 import com.waa.AmazonMini.auth.repository.RoleRepository;
 import com.waa.AmazonMini.auth.repository.UserRepository;
+import com.waa.AmazonMini.domain.Product;
 import com.waa.AmazonMini.domain.Seller;
 import com.waa.AmazonMini.domain.User;
 import com.waa.AmazonMini.dto.SellerSaveDTO;
@@ -131,6 +132,12 @@ public class SellerService implements ISellerService {
         var s = sellerRepository.findSellerByApprovalStatus(Status.APPROVED);
         return  s;
     }
+
+    public List<Product> findProductBySeller(long sellerId) {
+        var s = sellerRepository.findProductBySeller(sellerId);
+        return  s;
+    }
+
 
 
 

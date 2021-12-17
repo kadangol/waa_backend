@@ -3,8 +3,10 @@ package com.waa.AmazonMini.controller;
 import com.waa.AmazonMini.domain.Product;
 import com.waa.AmazonMini.dto.ProductSaveDTO;
 import com.waa.AmazonMini.dto.ProductUpdateDTO;
+import com.waa.AmazonMini.service.SellerService;
 import com.waa.AmazonMini.service.interfaces.IProductService;
 import com.waa.AmazonMini.utils.dto.ResponseMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,11 @@ import java.util.List;
 @RequestMapping("/product")
 @CrossOrigin
 public class ProductController {
+    @Autowired
     private final IProductService productService;
+
+    @Autowired
+    private SellerService sellerService;
 
     public ProductController(IProductService productService) {
         this.productService = productService;
@@ -52,5 +58,10 @@ public class ProductController {
     //@PreAuthorize("hasRole('SELLER')")
     public ResponseMessage delete(@PathVariable("productId") Long productId) {
         return productService.delete(productId);
+    }
+
+    @GetMapping("/findProductBySeller/{sellerId}")
+    public List<Product> findProductBySeller(@PathVariable long sellerId) {
+        return sellerService.findProductBySeller(sellerId);
     }
 }
