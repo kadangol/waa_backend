@@ -28,6 +28,6 @@ insert into  buyer(id, points, city, state, street, zipcode, userid) values(1, 5
 
 INSERT INTO product (id, description, name, priceperunit, quantity, seller_id) VALUES (10,'description','product name', 100, 1000,1) ON CONFLICT DO NOTHING;
 INSERT INTO product (id, description, name, priceperunit, quantity, seller_id) VALUES (11,'description2','product name2', 100, 1000,1) ON CONFLICT DO NOTHING;
-INSERT INTO orderline (id, orderstatus, quantity, city, state, street, zipcode, shippingstatus, buyer_id, product_id) VALUES (1,0, 12, 'city name', 'statename', 'street name', 52556, 0,1, 10) ON CONFLICT DO NOTHING;
-INSERT INTO orderline (id, orderstatus, quantity, city, state, street, zipcode, shippingstatus, buyer_id, product_id) VALUES (1,1, 10, 'city name2', 'statename2', 'street name2', 52556, 0,1, 11) ON CONFLICT DO NOTHING;
+-- INSERT INTO orderline (id, orderstatus, quantity, city, state, street, zipcode, shippingstatus, buyer_id, product_id) VALUES (1,0, 12, 'city name', 'statename', 'street name', 52556, 0,1, 10) ON CONFLICT DO NOTHING;
+-- INSERT INTO orderline (id, orderstatus, quantity, city, state, street, zipcode, shippingstatus, buyer_id, product_id) VALUES (1,1, 10, 'city name2', 'statename2', 'street name2', 52556, 0,1, 11) ON CONFLICT DO NOTHING;
 

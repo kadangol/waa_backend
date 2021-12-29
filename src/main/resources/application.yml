@@ -34,8 +34,8 @@ spring:
       mode: always
   mail:
     host: smtp.gmail.com
-    username: komiljon.ali.f@gmail.com
-    password: qwertyuiop112
+    username: exampleemail@gmail.com
+    password: mypassword
     port: 587
     properties:
       mail:
@@ -45,6 +45,6 @@ spring:
 demo:
   db:
     name:
-      mailfrom: komiljon.ali.f@gmail.com
+      mailfrom: exampleemail@gmail.com
 server:
-  port: 8080
+  port: 8082
